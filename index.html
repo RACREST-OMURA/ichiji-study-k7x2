@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="一次関数">
+<meta name="theme-color" content="#2f6fed">
+<title>一次関数トレーニング</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%232f6fed'/%3E%3Cpath d='M12 50 L52 14' stroke='white' stroke-width='6' stroke-linecap='round'/%3E%3C/svg%3E">
+<style>
+:root{
+  --bg:#f3f6fc; --card:#ffffff; --ink:#1b2437; --sub:#5b6680; --line:#dde3f0;
+  --main:#2f6fed; --main-ink:#ffffff; --ok:#12904f; --okbg:#e6f6ee; --ng:#c2410c; --ngbg:#fff1e8;
+  --warn:#b45309; --hint:#fff8e1; --hintline:#f1d98a;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,"Hiragino Sans","Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif;font-size:19px;line-height:1.65;padding:env(safe-area-inset-top) 0 40px}
+#app{max-width:860px;margin:0 auto;padding:14px 16px}
+h1{font-size:26px;margin:6px 0 2px}
+h2{font-size:22px;margin:0 0 10px}
+h3{font-size:20px;margin:18px 0 6px}
+h4{font-size:18px;margin:14px 0 4px}
+p{margin:6px 0}
+.sub{color:var(--sub);font-size:16px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px 18px;margin:14px 0}
+.btn{appearance:none;border:2px solid var(--main);background:#fff;color:var(--main);font:inherit;font-weight:700;border-radius:14px;min-height:52px;padding:10px 18px;cursor:pointer;touch-action:manipulation}
+.btn:active{transform:scale(.98)}
+.btn.primary{background:var(--main);color:var(--main-ink)}
+.btn.small{min-height:44px;padding:6px 14px;font-size:17px}
+.btn.wide{width:100%}
+.btn.ghost{border-color:var(--line);color:var(--sub)}
+.btn[disabled]{opacity:.4}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media (max-width:560px){.grid2{grid-template-columns:1fr}}
+.menu .btn{display:flex;flex-direction:column;align-items:flex-start;gap:2px;text-align:left;min-height:84px;width:100%}
+.menu .btn span{font-weight:400;font-size:15px;color:var(--sub)}
+.bar{height:12px;background:#e8edf7;border-radius:8px;overflow:hidden}
+.bar>i{display:block;height:100%;background:var(--main);border-radius:8px}
+.row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.row.between{justify-content:space-between}
+.chip{display:inline-block;border-radius:999px;padding:1px 10px;font-size:14px;font-weight:700;background:#e8edf7;color:var(--sub)}
+.chip.good{background:var(--okbg);color:var(--ok)}
+.chip.mid{background:#fff4d6;color:var(--warn)}
+.chip.weak{background:var(--ngbg);color:var(--ng)}
+.skillrow{display:flex;align-items:center;gap:10px;padding:6px 0;border-top:1px solid var(--line);font-size:17px}
+.skillrow .nm{flex:1}
+.skillrow .pc{width:48px;text-align:right;color:var(--sub)}
+.top{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:4px}
+.tag{display:inline-block;font-size:15px;font-weight:700;color:var(--main);background:#e9f0ff;border-radius:8px;padding:2px 10px;margin-bottom:8px}
+.qtext{font-size:21px;line-height:1.8}
+.qtext b{background:linear-gradient(transparent 62%,#ffe58a 62%)}
+.graphbox{max-width:420px;margin:10px auto}
+.graph{width:100%;height:auto;display:block;border-radius:10px}
+.tbl{border-collapse:collapse;margin:10px 0;font-size:20px}
+.tbl th,.tbl td{border:1.5px solid #9aa6c0;padding:4px 16px;text-align:center;min-width:52px}
+.tbl th{background:#eef2fb}
+.frac{display:inline-flex;flex-direction:column;vertical-align:middle;text-align:center;font-size:.82em;line-height:1.15;margin:0 .12em}
+.frac>span:first-child{border-bottom:1.6px solid currentColor;padding:0 .25em}
+.frac>span:last-child{padding:0 .25em}
+.choices{display:grid;gap:10px;margin:12px 0}
+.choice{appearance:none;text-align:left;font:inherit;font-size:20px;border:2px solid var(--line);background:#fff;border-radius:12px;padding:12px 16px;min-height:56px;cursor:pointer;color:var(--ink);touch-action:manipulation}
+.choice.sel{border-color:var(--main);background:#eaf1ff}
+.choice.off{opacity:.35;text-decoration:line-through}
+.choice.right{border-color:var(--ok);background:var(--okbg)}
+input.ans{width:100%;font:inherit;font-size:24px;padding:12px 14px;border:2px solid #aab6d3;border-radius:12px;background:#fff;color:var(--ink)}
+input.ans:focus{outline:3px solid #b9cffb;border-color:var(--main)}
+.pad{display:grid;grid-template-columns:repeat(auto-fill,minmax(62px,1fr));gap:8px;margin:10px 0}
+.pad button{appearance:none;font:inherit;font-size:22px;min-height:54px;border:1.5px solid #b7c2dc;background:#f7f9fe;border-radius:10px;color:var(--ink);touch-action:manipulation}
+.pad button:active{background:#dfe8fb}
+.pad button.fn{background:#eef0f5;font-size:16px}
+.fb{border-radius:12px;padding:12px 16px;margin:12px 0;font-weight:700}
+.fb.ok{background:var(--okbg);color:var(--ok)}
+.fb.ng{background:var(--ngbg);color:var(--ng)}
+.fb.info{background:#eef2fb;color:var(--sub)}
+.hintbox{background:var(--hint);border:1.5px solid var(--hintline);border-radius:12px;padding:10px 14px;margin:10px 0;font-size:18px}
+.hintbox b.hd{display:block;font-size:14px;color:var(--warn)}
+.steps{background:#f4f7ff;border:1.5px solid #cdd9f5;border-radius:12px;padding:10px 14px 10px 14px;margin:10px 0;font-size:18px}
+.steps ol{margin:4px 0;padding-left:1.4em}
+.steps .ans{margin-top:6px;font-weight:700;color:var(--ok)}
+.box{background:#eaf1ff;border-left:6px solid var(--main);padding:8px 14px;border-radius:8px;font-weight:700;margin:8px 0}
+.ex{background:#fff;border:1.5px dashed #aab6d3;padding:8px 14px;border-radius:10px;margin:8px 0}
+.learn ul,.learn ol{padding-left:1.3em;margin:6px 0}
+.learn li{margin:4px 0}
+details summary{cursor:pointer;font-weight:700;color:var(--main);padding:8px 0;min-height:44px}
+.dots{letter-spacing:4px;color:var(--main);font-size:20px}
+.slider{display:grid;grid-template-columns:130px 1fr 70px;gap:10px;align-items:center;margin:10px 0}
+.slider input{width:100%;height:36px}
+.eqbig{font-size:26px;font-weight:700;text-align:center;margin:8px 0}
+.histrow{display:flex;align-items:center;gap:10px;font-size:16px;margin:6px 0}
+.histrow .bar{flex:1}
+.histrow .sc{width:64px;text-align:right;font-weight:700}
+.small{font-size:15px}
+.center{text-align:center}
+.mt{margin-top:12px}
+.right-ans{color:var(--ok);font-weight:700}
+.wrongitem{border-top:1px solid var(--line);padding-top:10px;margin-top:10px}
+</style>
+</head>
+<body>
+<div id="app"><p class="sub">読み込み中…</p></div>
+<noscript><p style="padding:20px">このアプリは JavaScript が必要です。</p></noscript>
+<script src="engine.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
